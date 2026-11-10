@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "marginalia-extractor@zotero-marginalia-extractor": {
+      "updates": [
+        {
+          "version": "0.6.0",
+          "update_link": "https://codeberg.org/alexfink/zotero-marginalia-extractor/raw/branch/main/marginalia-extractor.xpi"
+        }
+      ]
+    }
+  }
+}

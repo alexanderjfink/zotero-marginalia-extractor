@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  id="marginalia-review-window"
+  title="Marginalia Extractor — Review"
+  windowtype="marginalia-extractor-review"
+  width="1180" height="780"
+  persist="screenX screenY width height">
+
+  <script src="review.js"/>
+
+  <html:style>
+    html, body { margin: 0; padding: 0; }
+    #mr-root { font: 13px -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+    #mr-header { padding: 10px 16px; border-bottom: 1px solid #ccc; }
+    #mr-header h2 { margin: 0 0 3px; font-size: 15px; }
+    #mr-meta { color: #777; font-size: 0.88em; }
+    #mr-warnings { color: #b35b00; font-size: 0.85em; margin-top: 3px; }
+    #mr-main { flex: 1; display: flex; min-height: 0; }
+    #mr-filters { display: flex; gap: 7px; align-items: center; padding: 8px 16px; border-bottom: 1px solid #ccc; flex-wrap: wrap; font-size: 0.82em; }
+    #mr-filters input[type="text"], #mr-filters select { padding: 3px 5px; }
+    .mr-spacer { margin-left: auto; }
+    .mr-card.checked { border-color: #e5a000; background: rgba(229,160,0,0.06); }
+    #mr-list { width: 48%; overflow: auto; border-right: 1px solid #ccc; padding: 10px; box-sizing: border-box; }
+    #mr-preview { width: 52%; overflow: auto; padding: 10px; box-sizing: border-box; }
+    .mr-card { border: 1px solid #ddd; border-radius: 6px; padding: 8px; margin-bottom: 8px; cursor: pointer; }
+    .mr-card.selected { border-color: #2a7; box-shadow: 0 0 0 1px #2a7 inset; }
+    .mr-card.deleted { opacity: 0.45; text-decoration: line-through; }
+    .mr-card-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .mr-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.25); }
+    .mr-card-text { margin: 5px 0; color: #333; }
+    .mr-card input.mr-comment { width: 100%; box-sizing: border-box; padding: 3px 5px; }
+    .mr-method { font-size: 0.8em; color: #777; }
+    .mr-low { color: #c33; font-weight: bold; }
+    #mr-preview-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .mr-images { display: flex; gap: 8px; }
+    .mr-image-wrap { position: relative; flex: 1; border: 1px solid #ccc; background: #fafafa; min-width: 0; }
+    .mr-image-wrap img { display: block; width: 100%; height: auto; }
+    .mr-image-label { font-size: 0.75em; color: #777; padding: 2px 4px; }
+    .mr-overlay { position: absolute; inset: 0; pointer-events: none; }
+    .mr-box { position: absolute; border: 2px solid #2a7; background: rgba(42,170,120,0.18); box-sizing: border-box; }
+    .mr-box.candidate { border-color: #e5a000; background: rgba(229,160,0,0.16); pointer-events: auto; cursor: pointer; }
+    .mr-box.candidate:hover { background: rgba(229,160,0,0.34); }
+    #mr-sentences { margin-top: 10px; max-height: 34vh; overflow: auto; border: 1px solid #ddd; border-radius: 4px; }
+    .mr-sentence { display: block; width: 100%; text-align: left; padding: 6px 8px; border: 0; border-bottom: 1px solid #eee; background: transparent; cursor: pointer; font: inherit; }
+    .mr-sentence:hover { background: rgba(42,170,120,0.10); }
+    .mr-sentence.current { background: rgba(42,170,120,0.22); font-weight: 600; }
+    .mr-sentence.selected-sentence { outline: 2px solid #e5a000; outline-offset: -2px; }
+    .mr-sentence .mr-sug { color: #e5a000; font-size: 0.78em; margin-right: 4px; }
+    #mr-footer { padding: 10px 16px; border-top: 1px solid #ccc; display: flex; justify-content: flex-end; gap: 10px; align-items: center; }
+    #mr-status { margin-right: auto; color: #777; font-size: 0.9em; }
+    button.mr-btn { padding: 6px 16px; border-radius: 4px; border: 1px solid #bbb; background: #fafafa; cursor: pointer; }
+    button.mr-primary { background: #2a7; color: #fff; border-color: #2a7; font-weight: bold; }
+    button.mr-small { padding: 2px 8px; font-size: 0.85em; }
+    @media (prefers-color-scheme: dark) {
+      #mr-root { background: #1e1e1e; color: #ddd; }
+      #mr-header, #mr-footer, #mr-list, #mr-filters { border-color: #444; }
+      .mr-card { border-color: #444; }
+      .mr-card-text { color: #ccc; }
+      .mr-card input.mr-comment { background: #2a2a2a; color: #eee; border: 1px solid #555; }
+      .mr-image-wrap { border-color: #444; background: #222; }
+      .mr-sentence { color: #ddd; border-bottom-color: #333; }
+      #mr-sentences { border-color: #444; }
+      button.mr-btn { background: #333; color: #eee; border-color: #555; }
+      button.mr-primary { background: #2a7; color: #fff; }
+      #mr-meta, #mr-status, .mr-method, .mr-image-label { color: #999; }
+    }
+  </html:style>
+
+  <vbox flex="1">
+    <html:div id="mr-root">
+      <html:div id="mr-header">
+        <html:h2>Extracted marginalia</html:h2>
+        <html:div id="mr-meta">Loading…</html:div>
+        <html:div id="mr-warnings"></html:div>
+      </html:div>
+      <html:div id="mr-filters">
+        <html:input id="mr-search" placeholder="Filter text…" />
+        <html:select id="mr-source">
+          <html:option value="all">All sources</html:option>
+          <html:option value="highlight">Colour marks</html:option>
+          <html:option value="margin_note">Margin notes</html:option>
+          <html:option value="dark_underline">Dark underlines</html:option>
+          <html:option value="manual">Manual</html:option>
+        </html:select>
+        <html:label style="display:flex;align-items:center;gap:4px;">
+          <html:input type="checkbox" id="mr-flagged" /> flagged only
+        </html:label>
+        <html:span id="mr-count" class="oc-muted"></html:span>
+        <html:span class="mr-spacer"></html:span>
+        <html:button id="mr-select-all" class="mr-btn mr-small">Select visible</html:button>
+        <html:select id="mr-bulk-color"></html:select>
+        <html:button id="mr-bulk-color-apply" class="mr-btn mr-small">Colour</html:button>
+        <html:select id="mr-bulk-type">
+          <html:option value="highlight">highlight</html:option>
+          <html:option value="underline">underline</html:option>
+          <html:option value="note">note</html:option>
+        </html:select>
+        <html:button id="mr-bulk-type-apply" class="mr-btn mr-small">Type</html:button>
+        <html:button id="mr-bulk-delete" class="mr-btn mr-small">Delete selected</html:button>
+        <html:button id="mr-undo" class="mr-btn mr-small">Undo</html:button>
+      </html:div>
+      <html:div id="mr-main">
+        <html:div id="mr-list"></html:div>
+        <html:div id="mr-preview">
+          <html:div id="mr-preview-toolbar">
+            <html:label for="mr-page-select">Page</html:label>
+            <html:select id="mr-page-select"></html:select>
+            <html:span id="mr-page-info" style="font-size:0.85em;color:#777;"></html:span>
+          </html:div>
+          <html:div class="mr-images">
+            <html:div class="mr-image-wrap">
+              <html:div class="mr-image-label">Scan (aligned)</html:div>
+              <html:img id="mr-scan-img" alt="scan" />
+              <html:div class="mr-overlay" id="mr-scan-overlay"></html:div>
+            </html:div>
+            <html:div class="mr-image-wrap">
+              <html:div class="mr-image-label">PDF page</html:div>
+              <html:img id="mr-pdf-img" alt="pdf" />
+              <html:div class="mr-overlay" id="mr-pdf-overlay"></html:div>
+            </html:div>
+          </html:div>
+          <html:div class="mr-images" id="mr-next-images" style="margin-top:8px; display:none;">
+            <html:div class="mr-image-wrap">
+              <html:div class="mr-image-label">Next page — scan</html:div>
+              <html:img id="mr-next-scan-img" alt="next scan" />
+              <html:div class="mr-overlay" id="mr-next-scan-overlay"></html:div>
+            </html:div>
+            <html:div class="mr-image-wrap">
+              <html:div class="mr-image-label">Next page — PDF</html:div>
+              <html:img id="mr-next-pdf-img" alt="next pdf" />
+              <html:div class="mr-overlay" id="mr-next-pdf-overlay"></html:div>
+            </html:div>
+          </html:div>
+          <html:div style="margin-top:8px; display:flex; gap:8px;">
+            <html:button id="mr-retarget" class="mr-btn mr-small">Set as target for selected annotation</html:button>
+            <html:button id="mr-add" class="mr-btn mr-small">＋ Add annotation from selected sentence</html:button>
+          </html:div>
+          <html:div id="mr-sentences"></html:div>
+        </html:div>
+      </html:div>
+      <html:div id="mr-footer">
+        <html:span id="mr-status"></html:span>
+        <html:button id="mr-cancel" class="mr-btn">Cancel</html:button>
+        <html:button id="mr-apply" class="mr-btn mr-primary">Apply changes</html:button>
+      </html:div>
+    </html:div>
+  </vbox>
+
+</window>

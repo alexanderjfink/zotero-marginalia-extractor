@@ -1,0 +1,33 @@
+{
+  "page_mapping": [
+    {
+      "label": "1",
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_index": 0
+    }
+  ],
+  "pages": [
+    {
+      "annotations": [
+        {
+          "candidates": [
+            "Coloured margins A blue pen note in the margin should be detected and keep its blue colour rather than being dropped as a highlight."
+          ],
+          "color": "#2ea8e5",
+          "comment": "NOTE",
+          "method": "vertical",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "margin_note",
+          "text": "Coloured margins A blue pen note in the margin should be detected and keep its blue colour rather than being dropped as a highlight.",
+          "type": "highlight"
+        }
+      ],
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_label": "1"
+    }
+  ],
+  "warnings": []
+}

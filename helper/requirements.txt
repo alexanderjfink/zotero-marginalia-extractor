@@ -1,0 +1,19 @@
+# Marginalia Extractor — Python helper dependencies
+#
+# Install into a virtualenv:
+#   python3 -m venv .venv
+#   . .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# You also need the Tesseract OCR binary on your PATH:
+#   macOS:   brew install tesseract
+#   Ubuntu:  sudo apt install tesseract-ocr
+#
+# Ollama is optional and only needed if you select the "ollama" OCR backend:
+#   https://ollama.com  ->  ollama pull qwen2.5vl
+
+PyMuPDF>=1.24
+opencv-python>=4.9
+numpy>=1.26
+Pillow>=10.0
+pytesseract>=0.3.10

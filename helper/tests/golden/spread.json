@@ -1,0 +1,31 @@
+{
+  "page_mapping": [
+    {
+      "label": "1a",
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_index": 0
+    },
+    {
+      "label": "1b",
+      "match_method": "text",
+      "pdf_index": 1,
+      "scan_index": 0
+    }
+  ],
+  "pages": [
+    {
+      "annotations": [],
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_label": "1a"
+    },
+    {
+      "annotations": [],
+      "match_method": "text",
+      "pdf_index": 1,
+      "scan_label": "1b"
+    }
+  ],
+  "warnings": []
+}

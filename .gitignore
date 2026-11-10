@@ -1,0 +1,76 @@
+# ── Build artifacts ─────────────────────────────────────────────────────────
+*.xpi
+marginalia-extractor.xpi
+*.zip
+helper/dist/
+helper/build/
+helper/*.spec
+*.log
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.egg-info/
+.eggs/
+
+# ── PyInstaller / packaging ─────────────────────────────────────────────────
+build/
+dist/
+*.manifest
+
+# ── Test data and generated fixtures ────────────────────────────────────────
+helper/tests/fixtures/
+helper/tests/corpus/*.pdf
+helper/tests/corpus/*.png
+helper/tests/corpus/*.jpg
+helper/tests/corpus/*.jpeg
+helper/tests/corpus/*.tif
+helper/tests/corpus/*.tiff
+# Keep helper/tests/corpus/README.md and helper/tests/golden/*.json
+
+# ── Runtime / temp / logs ───────────────────────────────────────────────────
+tmp/
+temp/
+out/
+.cache/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ── OS metadata ─────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+desktop.ini
+
+# ── Editors / local tooling ─────────────────────────────────────────────────
+.vscode/
+.idea/
+node_modules/
+.claude/settings.local.json
+.claude/*.local.json
+*.code-workspace
+
+# ── Secrets and local environment ───────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json

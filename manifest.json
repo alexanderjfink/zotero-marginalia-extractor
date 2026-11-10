@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Marginalia Extractor",
+  "version": "0.6.0",
+  "description": "Extract analog highlights and margin notes from a scanned book or essay into Zotero annotations. Aligns the scan against the PDF already in Zotero, detects colored highlights and handwritten notes, transcribes them, and maps each note to the sentence it points to.",
+  "author": "Alex Fink",
+  "homepage_url": "https://codeberg.org/alexfink/zotero-marginalia-extractor",
+  "icons": {
+    "48": "icons/marginalia-48.png",
+    "96": "icons/marginalia-96.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "marginalia-extractor@zotero-marginalia-extractor",
+      "update_url": "https://codeberg.org/alexfink/zotero-marginalia-extractor/raw/branch/main/updates.json"
+    }
+  },
+  "applications": {
+    "zotero": {
+      "id": "marginalia-extractor@zotero-marginalia-extractor",
+      "update_url": "https://codeberg.org/alexfink/zotero-marginalia-extractor/raw/branch/main/updates.json",
+      "strict_min_version": "7.0",
+      "strict_max_version": "10.*"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "page_mapping": [
+    {
+      "label": "1",
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_index": 0
+    }
+  ],
+  "pages": [
+    {
+      "annotations": [
+        {
+          "candidates": [],
+          "color": "#ffd400",
+          "comment": "",
+          "method": "",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "highlight",
+          "text": "The quick brown",
+          "type": "highlight"
+        },
+        {
+          "candidates": [
+            "A in the margin is note index of attention, pointing back the that provoked it. to sentence an",
+            "On the Extraction of Marginalia The practice of reading with pencil is ancient, but it has only a recently become amenable computational analysis.",
+            "The quick brown to fox jumps the lazy dog the river bank dawn. at over near A second consideration is the alignment between physical and a copy its digital When scanned carefully, the printed surrogate. pages are be matched the PDF layer with high confidence. text to text can Finally, the margin itself carries meaning."
+          ],
+          "color": "#ffd400",
+          "comment": "KEY IDEA",
+          "method": "line",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "margin_note",
+          "text": "The quick brown to fox jumps the lazy dog the river bank dawn. at over near A second consideration is the alignment between physical and a copy its digital When scanned carefully, the printed surrogate. pages are be matched the PDF layer with high confidence. text to text can Finally, the margin itself carries meaning.",
+          "type": "highlight"
+        },
+        {
+          "candidates": [],
+          "color": "#ff6666",
+          "comment": "",
+          "method": "",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "highlight",
+          "text": "its digital When scanned carefully, the printed surrogate. pages are",
+          "type": "underline"
+        }
+      ],
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_label": "1"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  id="marginalia-mapping-window"
+  title="Marginalia Extractor — Page Mapping"
+  windowtype="marginalia-extractor-mapping"
+  width="780" height="640">
+
+  <script src="mapping.js"/>
+
+  <html:style>
+    html, body { margin: 0; padding: 0; }
+    #mm-root { font: 13px -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+    #mm-header { padding: 12px 16px; border-bottom: 1px solid #ccc; }
+    #mm-header h2 { margin: 0 0 4px; font-size: 15px; }
+    #mm-help { color: #777; font-size: 0.9em; }
+    #mm-warnings { color: #b35b00; font-size: 0.85em; margin-top: 4px; }
+    #mm-table-wrap { flex: 1; overflow: auto; padding: 10px 16px; }
+    table.mm-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+    table.mm-table th { text-align: left; padding: 7px 8px; border-bottom: 1px solid #ccc; background: #f0f0f0; position: sticky; top: 0; }
+    table.mm-table td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+    table.mm-table select { max-width: 320px; padding: 3px 5px; }
+    .mm-method { color: #777; font-size: 0.85em; }
+    .mm-warn { color: #b35b00; font-weight: 600; }
+    #mm-footer { padding: 10px 16px; border-top: 1px solid #ccc; display: flex; justify-content: flex-end; gap: 10px; }
+    button.mm-btn { padding: 6px 16px; border-radius: 4px; border: 1px solid #bbb; background: #fafafa; cursor: pointer; }
+    button.mm-primary { background: #2a7; color: #fff; border-color: #2a7; font-weight: bold; }
+    @media (prefers-color-scheme: dark) {
+      #mm-root { background: #1e1e1e; color: #ddd; }
+      #mm-header, #mm-footer { border-color: #444; }
+      table.mm-table th { background: #2c2c2c; color: #ccc; border-color: #555; }
+      table.mm-table td { border-color: #333; }
+      table.mm-table select { background: #2a2a2a; color: #eee; border: 1px solid #555; }
+      #mm-help, .mm-method { color: #999; }
+      button.mm-btn { background: #333; color: #eee; border-color: #555; }
+      button.mm-primary { background: #2a7; color: #fff; }
+    }
+  </html:style>
+
+  <vbox flex="1">
+    <html:div id="mm-root">
+      <html:div id="mm-header">
+        <html:h2>Scan → PDF page mapping</html:h2>
+        <html:div id="mm-help">
+          Check the automatic mapping, change any page, then extract with your corrections.
+        </html:div>
+        <html:div id="mm-warnings"></html:div>
+      </html:div>
+      <html:div id="mm-table-wrap">
+        <html:table class="mm-table">
+          <html:thead>
+            <html:tr>
+              <html:th style="width: 110px;">Scan page</html:th>
+              <html:th>Matched PDF page</html:th>
+              <html:th style="width: 150px;">Method</html:th>
+            </html:tr>
+          </html:thead>
+          <html:tbody id="mm-body"></html:tbody>
+        </html:table>
+      </html:div>
+      <html:div id="mm-footer">
+        <html:button id="mm-cancel" class="mm-btn">Cancel</html:button>
+        <html:button id="mm-accept" class="mm-btn mm-primary">Accept &amp; extract</html:button>
+      </html:div>
+    </html:div>
+  </vbox>
+
+</window>

@@ -1,0 +1,377 @@
+<vbox
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  id="marginalia-extractor-prefs"
+  style="padding: 14px; min-width: 680px;"
+>
+
+  <html:style>
+    #zm-tabs { display: flex; gap: 2px; background: #eee; padding: 3px; border-radius: 4px; margin-bottom: 10px; flex-wrap: wrap; }
+    .zm-tab { padding: 5px 12px; border: 0; background: transparent; border-radius: 3px; cursor: pointer; font: inherit; color: #555; }
+    .zm-tab.active { background: #fff; color: #111; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+    #zm-search { width: 260px; padding: 4px 7px; }
+    #zm-profiles { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    #zm-profiles select { padding: 3px 5px; }
+    .zm-btn { padding: 3px 9px; cursor: pointer; }
+    .zm-status { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 6px 0; font-size: 0.85em; }
+    .zm-chip { padding: 1px 8px; border-radius: 999px; background: #eee; }
+    .zm-chip.ok { background: #e3f5e8; color: #1d7a3a; }
+    .zm-chip.warn { background: #fff1d6; color: #9a5a00; }
+    .zm-chip.bad { background: #fde8e8; color: #b22; }
+    #marginalia-colors-table { border-collapse: collapse; font-size: 0.82em; width: 100%; }
+    #marginalia-colors-table th { padding: 5px 5px; text-align: left; border-bottom: 1px solid #ccc; background: #f0f0f0; position: sticky; top: 0; }
+    #marginalia-colors-table td { padding: 3px 4px; border-bottom: 1px solid #eee; }
+    #marginalia-colors-table input[type="text"],
+    #marginalia-colors-table input[type="number"],
+    #marginalia-colors-table select { width: 100%; box-sizing: border-box; }
+    .zm-help { margin: 4px 0 10px; font-size: 0.88em; color: #666; }
+    .zm-row { display: flex; align-items: center; gap: 8px; margin-top: 7px; flex-wrap: wrap; }
+    .zm-row > label { min-width: 160px; font-weight: 600; }
+    @media (prefers-color-scheme: dark) {
+      .zm-tab { color: #aaa; }
+      .zm-tab.active { background: #333; color: #fff; }
+      #zm-tabs { background: #2a2a2a; }
+      .zm-chip { background: #333; color: #ddd; }
+      .zm-chip.ok { background: #16351f; color: #7fd49a; }
+      .zm-chip.warn { background: #3a2a10; color: #e5b567; }
+      .zm-chip.bad { background: #3a1717; color: #e88; }
+      #marginalia-colors-table th { background: #2c2c2c; color: #d0d0d0; border-bottom-color: #555; }
+      #marginalia-colors-table td { border-bottom-color: #333; color: #d0d0d0; }
+      .zm-help { color: #999; }
+    }
+  </html:style>
+
+  <hbox align="center" style="margin-bottom: 8px; gap: 10px;">
+    <html:input type="text" id="zm-search" placeholder="Search settings…" aria-label="Search settings" />
+    <html:div id="zm-tabs" role="tablist" aria-label="Settings sections">
+      <html:button class="zm-tab active" data-tab="setup" role="tab" aria-selected="true">Setup</html:button>
+      <html:button class="zm-tab" data-tab="pages" role="tab" aria-selected="false">Pages</html:button>
+      <html:button class="zm-tab" data-tab="marks" role="tab" aria-selected="false">Marks</html:button>
+      <html:button class="zm-tab" data-tab="ocr" role="tab" aria-selected="false">OCR</html:button>
+      <html:button class="zm-tab" data-tab="review" role="tab" aria-selected="false">Review</html:button>
+      <html:button class="zm-tab" data-tab="advanced" role="tab" aria-selected="false">Advanced</html:button>
+    </html:div>
+  </hbox>
+
+  <html:div id="zm-profiles">
+    <html:label for="zm-profile-select" style="font-weight:600;">Profile</html:label>
+    <html:select id="zm-profile-select" aria-label="Settings profile"></html:select>
+    <html:button id="zm-profile-apply" class="zm-btn">Apply</html:button>
+    <html:button id="zm-profile-save" class="zm-btn">Save as…</html:button>
+    <html:button id="zm-profile-delete" class="zm-btn">Delete</html:button>
+    <html:span style="flex:1"></html:span>
+    <html:button id="zm-import" class="zm-btn">Import…</html:button>
+    <html:button id="zm-export" class="zm-btn">Export…</html:button>
+    <html:button id="zm-reset-all" class="zm-btn">Reset all</html:button>
+  </html:div>
+
+  <!-- ═════════ Setup ═════════ -->
+  <vbox class="zm-tabpane" data-pane="setup">
+    <groupbox>
+      <label value="Helper" style="font-weight: bold;" />
+      <html:p class="zm-help">
+        The extraction runs in a local Python helper. Point at the helper folder
+        and either its venv Python or the single-file binary in helper/dist.
+      </html:p>
+      <html:div class="zm-row">
+        <html:label for="me-python-path">Python executable</html:label>
+        <html:input type="text" id="me-python-path" placeholder="python3" style="width: 320px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-helper-dir">Helper folder</html:label>
+        <html:input type="text" id="me-helper-dir" placeholder="/path/to/helper" style="width: 320px;" />
+        <html:button id="me-browse-helper" class="zm-btn">Browse…</html:button>
+        <html:button id="me-test-helper" class="zm-btn">Test</html:button>
+        <html:span id="me-test-status" style="font-size:0.9em;"></html:span>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label style="min-width:0;">
+          <html:input type="checkbox" id="me-auto-binary" /> Use the single-file binary when present
+        </html:label>
+      </html:div>
+    </groupbox>
+
+    <groupbox>
+      <label value="Status" style="font-weight: bold;" />
+      <html:div class="zm-status">
+        <html:span id="me-status-tesseract" class="zm-chip">Tesseract ?</html:span>
+        <html:span id="me-status-llm" class="zm-chip">LLM ?</html:span>
+        <html:span id="me-status-helper" class="zm-chip">Helper ?</html:span>
+        <html:button id="me-run-check" class="zm-btn">Run check</html:button>
+      </html:div>
+      <html:p class="zm-help" id="me-check-detail"></html:p>
+    </groupbox>
+  </vbox>
+
+  <!-- ═════════ Pages ═════════ -->
+  <vbox class="zm-tabpane" data-pane="pages" hidden="true">
+    <groupbox>
+      <label value="Page mapping" style="font-weight: bold;" />
+      <html:p class="zm-help">
+        Map scanned pages to the PDF. Use the context-menu “Preview Page Mapping…”
+        to inspect and correct a specific scan.
+      </html:p>
+      <html:div class="zm-row">
+        <html:label for="me-page-offset">Page offset</html:label>
+        <html:input type="number" id="me-page-offset" step="1" style="width: 80px;" />
+        <html:span class="zm-help" style="margin:0;">scan page 1 = PDF page (1 + offset)</html:span>
+      </html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-match-pages" /> Match pages by text</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-split-spreads" /> Split landscape scans into two pages</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-merge-cross-page" /> Join highlights across a page break</html:label></html:div>
+    </groupbox>
+
+    <groupbox>
+      <label value="Image cleanup" style="font-weight: bold;" />
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-perspective" /> Correct perspective (phone photos)</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-deskew" /> Deskew skewed scans</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-remove-shadows" /> Remove gutter shadows / lighting gradients</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-white-balance" /> White-balance before colour detection</html:label></html:div>
+      <html:div class="zm-row">
+        <html:label for="me-dpi">Render DPI</html:label>
+        <html:input type="number" id="me-dpi" min="100" max="600" step="10" style="width: 80px;" />
+      </html:div>
+    </groupbox>
+  </vbox>
+
+  <!-- ═════════ Marks ═════════ -->
+  <vbox class="zm-tabpane" data-pane="marks" hidden="true">
+    <groupbox>
+      <label value="Mark detection" style="font-weight: bold;" />
+      <html:div class="zm-row">
+        <html:label for="me-mark-mode">Mark type</html:label>
+        <menulist id="me-mark-mode" native="true" style="padding: 2px 6px;">
+          <menupopup>
+            <menuitem value="both" label="Both — highlights and underlines" />
+            <menuitem value="highlight" label="Force highlight" />
+            <menuitem value="underline" label="Force underline" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-note-color">Margin note colour</html:label>
+        <menulist id="me-note-color" native="true" style="padding: 2px 6px;">
+          <menupopup>
+            <menuitem value="yellow" label="Yellow" /><menuitem value="red" label="Red" />
+            <menuitem value="green" label="Green" /><menuitem value="blue" label="Blue" />
+            <menuitem value="purple" label="Purple" /><menuitem value="magenta" label="Magenta" />
+            <menuitem value="orange" label="Orange" /><menuitem value="grey" label="Grey" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-color-space">Colour matching</html:label>
+        <menulist id="me-color-space" native="true" style="padding: 2px 6px;">
+          <menupopup>
+            <menuitem value="hsv" label="HSV ranges" />
+            <menuitem value="lab" label="Lab nearest colour" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-dark-underlines" /> Detect black/blue pen underlines</html:label></html:div>
+      <html:div class="zm-row">
+        <html:label for="me-dark-underline-color">Dark underline colour</html:label>
+        <menulist id="me-dark-underline-color" native="true" style="padding: 2px 6px;">
+          <menupopup>
+            <menuitem value="grey" label="Grey" /><menuitem value="yellow" label="Yellow" />
+            <menuitem value="red" label="Red" /><menuitem value="green" label="Green" />
+            <menuitem value="blue" label="Blue" /><menuitem value="purple" label="Purple" />
+          </menupopup>
+        </menulist>
+      </html:div>
+    </groupbox>
+
+    <groupbox>
+      <label value="Colour mapping" style="font-weight: bold;" />
+      <html:p class="zm-help">
+        Map a physical colour (HSV range) to a Zotero colour and an output type.
+        “Output” overrides the global mark type for that colour.
+      </html:p>
+      <html:div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+        <html:button id="me-add-color" class="zm-btn">+ Add colour</html:button>
+        <html:button id="me-calibrate" class="zm-btn">Sample from image…</html:button>
+        <html:button id="me-reset-colors" class="zm-btn">Reset colours</html:button>
+      </html:div>
+      <html:div style="max-height: 300px; overflow:auto; border:1px solid #ccc; border-radius:3px;">
+        <html:table id="marginalia-colors-table">
+          <html:thead>
+            <html:tr>
+              <html:th style="width:70px;">Name</html:th>
+              <html:th style="width:80px;">Zotero</html:th>
+              <html:th style="width:82px;">Output</html:th>
+              <html:th style="width:54px;">Hue−</html:th>
+              <html:th style="width:54px;">Hue+</html:th>
+              <html:th style="width:54px;">Sat−</html:th>
+              <html:th style="width:54px;">Val−</html:th>
+              <html:th style="width:54px;">Val+</html:th>
+              <html:th style="width:82px;">Type</html:th>
+              <html:th style="width:34px;">On</html:th>
+              <html:th style="width:30px;"></html:th>
+            </html:tr>
+          </html:thead>
+          <html:tbody id="marginalia-colors-body"></html:tbody>
+        </html:table>
+      </html:div>
+      <html:div class="zm-row" style="justify-content:flex-end;">
+        <html:span id="me-save-status" style="font-size:0.9em;color:#2a7;"></html:span>
+        <html:button id="me-save" class="zm-btn">Save colour mapping</html:button>
+      </html:div>
+    </groupbox>
+  </vbox>
+
+  <!-- ═════════ OCR ═════════ -->
+  <vbox class="zm-tabpane" data-pane="ocr" hidden="true">
+    <groupbox>
+      <label value="Handwriting transcription" style="font-weight: bold;" />
+      <html:p class="zm-help">
+        Tesseract is fast but struggles with handwriting. Use Ollama, any
+        OpenAI-compatible vision server (vLLM, LM Studio, llama.cpp, LocalAI,
+        OpenRouter, OpenAI), or Anthropic Claude. Presets fill the endpoint and
+        model; remote APIs can read the key from the environment variable.
+      </html:p>
+      <html:div class="zm-row">
+        <html:label for="me-llm-preset">Preset</html:label>
+        <html:select id="me-llm-preset" aria-label="LLM endpoint preset">
+          <html:option value="Ollama">Ollama</html:option>
+          <html:option value="vLLM">vLLM</html:option>
+          <html:option value="LM Studio">LM Studio</html:option>
+          <html:option value="llama.cpp">llama.cpp server</html:option>
+          <html:option value="OpenRouter">OpenRouter</html:option>
+          <html:option value="OpenAI">OpenAI</html:option>
+          <html:option value="Anthropic">Anthropic</html:option>
+          <html:option value="Custom">Custom</html:option>
+        </html:select>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-ocr-backend">Backend</html:label>
+        <menulist id="me-ocr-backend" native="true" style="padding: 2px 6px;">
+          <menupopup>
+            <menuitem value="tesseract" label="Tesseract" />
+            <menuitem value="ollama" label="Ollama" />
+            <menuitem value="openai" label="OpenAI-compatible (vLLM, LM Studio, llama.cpp…)" />
+            <menuitem value="anthropic" label="Anthropic (Claude)" />
+            <menuitem value="none" label="None" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-url">Endpoint URL</html:label>
+        <html:input type="text" id="me-llm-url" placeholder="http://127.0.0.1:8000/v1" style="width: 340px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-model">Model</html:label>
+        <html:input type="text" id="me-llm-model" list="me-model-list" style="width: 260px;" />
+        <html:datalist id="me-model-list"></html:datalist>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-key">API key</html:label>
+        <html:input type="password" id="me-llm-key" style="width: 240px;" />
+        <html:span class="zm-help" style="margin:0;">optional — prefer the env var</html:span>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-key-env">Key env var</html:label>
+        <html:input type="text" id="me-llm-key-env" style="width: 220px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-prompt">Prompt</html:label>
+        <html:textarea id="me-llm-prompt" rows="3" style="width: 360px;"></html:textarea>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-timeout">Timeout (s)</html:label>
+        <html:input type="number" id="me-llm-timeout" min="10" max="900" step="10" style="width: 90px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-max-tokens">Max tokens</html:label>
+        <html:input type="number" id="me-llm-max-tokens" min="64" max="8192" step="64" style="width: 100px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-llm-temperature">Temperature</html:label>
+        <html:input type="number" id="me-llm-temperature" min="0" max="2" step="0.1" style="width: 90px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-ocr-lang">Tesseract language</html:label>
+        <html:input type="text" id="me-ocr-lang" list="me-lang-list" style="width: 180px;" />
+        <html:datalist id="me-lang-list"></html:datalist>
+      </html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-ocr-line-split" /> Split notes into lines before Tesseract</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-ocr-orientation" /> Detect and correct note orientation</html:label></html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-ocr-pdf" /> OCR image-only PDF pages</html:label></html:div>
+    </groupbox>
+  </vbox>
+
+  <!-- ═════════ Review ═════════ -->
+  <vbox class="zm-tabpane" data-pane="review" hidden="true">
+    <groupbox>
+      <label value="Review window" style="font-weight: bold;" />
+      <html:div class="zm-row">
+        <html:label for="me-max-candidates">Suggested sentences</html:label>
+        <html:input type="number" id="me-max-candidates" min="1" max="10" step="1" style="width: 80px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-low-confidence">Flag below confidence</html:label>
+        <html:input type="number" id="me-low-confidence" min="0" max="1" step="0.05" style="width: 80px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-default-new-color">New annotation colour</html:label>
+        <menulist id="me-default-new-color" native="true">
+          <menupopup>
+            <menuitem value="#ffd400" label="Yellow" /><menuitem value="#ff6666" label="Red" />
+            <menuitem value="#5fb236" label="Green" /><menuitem value="#2ea8e5" label="Blue" />
+            <menuitem value="#a28ae5" label="Purple" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-default-new-type">New annotation type</html:label>
+        <menulist id="me-default-new-type" native="true">
+          <menupopup>
+            <menuitem value="highlight" label="Highlight" />
+            <menuitem value="underline" label="Underline" />
+            <menuitem value="note" label="Note" />
+          </menupopup>
+        </menulist>
+      </html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-replace-previous" /> Replace the previous extraction when applying</html:label></html:div>
+    </groupbox>
+
+    <groupbox>
+      <label value="Annotation content" style="font-weight: bold;" />
+      <html:div class="zm-row">
+        <html:label for="me-comment-prefix">Comment prefix</html:label>
+        <html:input type="text" id="me-comment-prefix" style="width: 280px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-comment-suffix">Comment suffix</html:label>
+        <html:input type="text" id="me-comment-suffix" style="width: 280px;" />
+      </html:div>
+      <html:div class="zm-row"><html:label style="min-width:0;"><html:input type="checkbox" id="me-append-source" /> Append “— scanned p. N” to notes</html:label></html:div>
+    </groupbox>
+  </vbox>
+
+  <!-- ═════════ Advanced ═════════ -->
+  <vbox class="zm-tabpane" data-pane="advanced" hidden="true">
+    <groupbox>
+      <label value="Detection thresholds" style="font-weight: bold;" />
+      <html:div class="zm-row">
+        <html:label for="me-min-highlight">Min highlight area (px)</html:label>
+        <html:input type="number" id="me-min-highlight" min="20" max="2000" step="10" style="width: 90px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-min-note">Min note area (px)</html:label>
+        <html:input type="number" id="me-min-note" min="20" max="2000" step="10" style="width: 90px;" />
+      </html:div>
+      <html:div class="zm-row">
+        <html:label for="me-margin-fraction">Margin fraction</html:label>
+        <html:input type="number" id="me-margin-fraction" min="0.05" max="0.4" step="0.01" style="width: 90px;" />
+      </html:div>
+    </groupbox>
+    <groupbox>
+      <label value="Diagnostics" style="font-weight: bold;" />
+      <html:p class="zm-help">
+        Run logs are written next to the helper output and can be opened from
+        Tools → Open Last Marginalia Log.
+      </html:p>
+    </groupbox>
+  </vbox>
+
+</vbox>

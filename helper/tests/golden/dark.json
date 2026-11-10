@@ -1,0 +1,31 @@
+{
+  "page_mapping": [
+    {
+      "label": "1",
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_index": 0
+    }
+  ],
+  "pages": [
+    {
+      "annotations": [
+        {
+          "candidates": [],
+          "color": "#aaaaaa",
+          "comment": "",
+          "method": "underline",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "dark_underline",
+          "text": "This sentence has a black pen underline beneath it.",
+          "type": "underline"
+        }
+      ],
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_label": "1"
+    }
+  ],
+  "warnings": []
+}

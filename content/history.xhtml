@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  id="marginalia-history-window"
+  title="Marginalia Extractor — Run History"
+  windowtype="marginalia-extractor-history"
+  width="780" height="640">
+
+  <script src="history.js"/>
+
+  <html:style>
+    html, body { margin: 0; padding: 0; }
+    #mh-root { font: 13px -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+    #mh-header { padding: 12px 16px; border-bottom: 1px solid #ccc; }
+    #mh-header h2 { margin: 0 0 4px; font-size: 15px; }
+    #mh-help { color: #777; font-size: 0.9em; }
+    #mh-list { flex: 1; overflow: auto; padding: 10px 16px; }
+    .mh-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; }
+    .mh-date { font-weight: 600; }
+    .mh-meta { color: #777; font-size: 0.85em; }
+    .mh-spacer { margin-left: auto; }
+    button.mh-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid #bbb; background: #fafafa; cursor: pointer; }
+    button.mh-restore { background: #2a7; color: #fff; border-color: #2a7; font-weight: 600; }
+    button.mh-delete { color: #b33; }
+    #mh-empty { color: #777; padding: 20px 0; }
+    #mh-footer { padding: 10px 16px; border-top: 1px solid #ccc; display: flex; justify-content: flex-end; }
+    @media (prefers-color-scheme: dark) {
+      #mh-root { background: #1e1e1e; color: #ddd; }
+      #mh-header, #mh-footer { border-color: #444; }
+      .mh-row { border-color: #444; }
+      #mh-help, .mh-meta, #mh-empty { color: #999; }
+      button.mh-btn { background: #333; color: #eee; border-color: #555; }
+      button.mh-restore { background: #2a7; color: #fff; }
+    }
+  </html:style>
+
+  <vbox flex="1">
+    <html:div id="mh-root">
+      <html:div id="mh-header">
+        <html:h2>Extraction history</html:h2>
+        <html:div id="mh-help">Restore re-applies a previous run's annotations; delete removes it from history only.</html:div>
+      </html:div>
+      <html:div id="mh-list"></html:div>
+      <html:div id="mh-footer">
+        <html:button id="mh-close" class="mh-btn">Close</html:button>
+      </html:div>
+    </html:div>
+  </vbox>
+
+</window>

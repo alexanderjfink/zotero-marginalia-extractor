@@ -1,0 +1,58 @@
+{
+  "page_mapping": [
+    {
+      "label": "1",
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_index": 0
+    }
+  ],
+  "pages": [
+    {
+      "annotations": [
+        {
+          "candidates": [
+            "A note in the margin is an index of attention, pointing back to the sentence that provoked it.",
+            "A second consideration is the alignment between a physical copy and its digital surrogate.",
+            "Finally, the margin itself carries meaning.",
+            "When pages are scanned carefully, the printed text can be matched to the PDF text layer with high confidence."
+          ],
+          "color": "#ffd400",
+          "comment": "KEY IDEA",
+          "method": "line",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "margin_note",
+          "text": "Finally, the margin itself carries meaning.",
+          "type": "highlight"
+        },
+        {
+          "candidates": [],
+          "color": "#ffd400",
+          "comment": "",
+          "method": "",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "highlight",
+          "text": "The quick brown",
+          "type": "highlight"
+        },
+        {
+          "candidates": [],
+          "color": "#ff6666",
+          "comment": "",
+          "method": "",
+          "next_page_index": null,
+          "page_index": 0,
+          "source": "highlight",
+          "text": "its digital surrogate. When pages are scanned carefully, the printed",
+          "type": "underline"
+        }
+      ],
+      "match_method": "text-index",
+      "pdf_index": 0,
+      "scan_label": "1"
+    }
+  ],
+  "warnings": []
+}
